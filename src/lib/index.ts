@@ -1,6 +1,6 @@
-import { fetch } from "cross-fetch";
+import { fetch } from 'cross-fetch';
 
-import tokenlist from "../tokens/solana.tokenlist.json";
+import tokenlist from '../tokens/solana.tokenlist.json';
 
 export enum ENV {
   MainnetBeta = 101,
@@ -54,14 +54,14 @@ export interface TokenInfo {
 export type TokenInfoMap = Map<string, TokenInfo>;
 
 export const CLUSTER_SLUGS: { [id: string]: ENV } = {
-  "mainnet-beta": ENV.MainnetBeta,
+  'mainnet-beta': ENV.MainnetBeta,
   testnet: ENV.Testnet,
   devnet: ENV.Devnet,
 };
 
 export class GitHubTokenListResolutionStrategy {
   repositories = [
-    "https://raw.githubusercontent.com/JuanRdBO/solana-token-list/main/src/tokens/solana.tokenlist.json",
+    'https://raw.githubusercontent.com/JuanRdBO/solana-token-list/main/src/tokens/solana.tokenlist.json',
   ];
 
   resolve = () => {
@@ -71,7 +71,7 @@ export class GitHubTokenListResolutionStrategy {
 
 export class CDNTokenListResolutionStrategy {
   repositories = [
-    "https://cdn.jsdelivr.net/gh/JuanRdBO/solana-token-list@latest/src/tokens/solana.tokenlist.json",
+    'https://cdn.jsdelivr.net/gh/JuanRdBO/solana-token-list@latest/src/tokens/solana.tokenlist.json',
   ];
 
   resolve = () => {
@@ -79,13 +79,13 @@ export class CDNTokenListResolutionStrategy {
   };
 }
 
-export class SolanaTokenListResolutionStrategy {
-  repositories = ["https://token-list.solana.com/solana.tokenlist.json"];
+// export class SolanaTokenListResolutionStrategy {
+//   repositories = ["https://token-list.solana.com/solana.tokenlist.json"];
 
-  resolve = () => {
-    return queryJsonFiles(this.repositories);
-  };
-}
+//   resolve = () => {
+//     return queryJsonFiles(this.repositories);
+//   };
+// }
 
 const queryJsonFiles = async (files: string[]) => {
   const responses: TokenList[] = (await Promise.all(
@@ -95,7 +95,9 @@ const queryJsonFiles = async (files: string[]) => {
         const json = (await response.json()) as TokenList;
         return json;
       } catch {
-        console.info(`@solana/token-registry: falling back to static repository.`);
+        console.info(
+          `@solana/token-registry: falling back to static repository.`
+        );
         return tokenlist;
       }
     })
@@ -107,15 +109,15 @@ const queryJsonFiles = async (files: string[]) => {
 };
 
 export enum Strategy {
-  GitHub = "GitHub",
-  Static = "Static",
-  Solana = "Solana",
-  CDN = "CDN",
+  GitHub = 'GitHub',
+  Static = 'Static',
+  //   Solana = "Solana",
+  CDN = 'CDN',
 }
 
 export class StaticTokenListResolutionStrategy {
   resolve = () => {
-    //@ts-ignore
+    // @ts-ignore
     return tokenlist.tokens || [];
   };
 }
@@ -124,12 +126,16 @@ export class TokenListProvider {
   static strategies = {
     [Strategy.GitHub]: new GitHubTokenListResolutionStrategy(),
     [Strategy.Static]: new StaticTokenListResolutionStrategy(),
-    /* [Strategy.Solana]: new SolanaTokenListResolutionStrategy(), */
+    // [Strategy.Solana]: new SolanaTokenListResolutionStrategy(),
     [Strategy.CDN]: new CDNTokenListResolutionStrategy(),
   };
 
-  resolve = async (strategy: Strategy = Strategy.CDN): Promise<TokenListContainer> => {
-    return new TokenListContainer(await TokenListProvider.strategies[strategy].resolve());
+  resolve = async (
+    strategy: Strategy = Strategy.CDN
+  ): Promise<TokenListContainer> => {
+    return new TokenListContainer(
+      await TokenListProvider.strategies[strategy].resolve()
+    );
   };
 }
 
@@ -137,26 +143,36 @@ export class TokenListContainer {
   constructor(private tokenList: TokenInfo[]) {}
 
   filterByTag = (tag: string) => {
-    return new TokenListContainer(this.tokenList.filter((item) => (item.tags || []).includes(tag)));
+    return new TokenListContainer(
+      this.tokenList.filter((item) => (item.tags || []).includes(tag))
+    );
   };
 
   filterByChainId = (chainId: number | ENV) => {
-    return new TokenListContainer(this.tokenList.filter((item) => item.chainId === chainId));
+    return new TokenListContainer(
+      this.tokenList.filter((item) => item.chainId === chainId)
+    );
   };
 
   excludeByChainId = (chainId: number | ENV) => {
-    return new TokenListContainer(this.tokenList.filter((item) => item.chainId !== chainId));
+    return new TokenListContainer(
+      this.tokenList.filter((item) => item.chainId !== chainId)
+    );
   };
 
   excludeByTag = (tag: string) => {
-    return new TokenListContainer(this.tokenList.filter((item) => !(item.tags || []).includes(tag)));
+    return new TokenListContainer(
+      this.tokenList.filter((item) => !(item.tags || []).includes(tag))
+    );
   };
 
   filterByClusterSlug = (slug: string) => {
     if (slug in CLUSTER_SLUGS) {
       return this.filterByChainId(CLUSTER_SLUGS[slug]);
     }
-    throw new Error(`Unknown slug: ${slug}, please use one of ${Object.keys(CLUSTER_SLUGS)}`);
+    throw new Error(
+      `Unknown slug: ${slug}, please use one of ${Object.keys(CLUSTER_SLUGS)}`
+    );
   };
 
   getList = () => {

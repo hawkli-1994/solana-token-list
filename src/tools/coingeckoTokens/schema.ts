@@ -1,18 +1,13 @@
 import {
-  enums,
   type,
   Infer,
   number,
   string,
   optional,
   array,
-  instance,
-  coerce,
-  union,
-  boolean,
   any,
   nullable,
-} from "superstruct";
+} from 'superstruct';
 
 // This is the schema for the data returned by the Coingecko API _coinsUrl
 
@@ -25,47 +20,47 @@ export const CoingeckoCoinSchema = type({
     type({
       ethereum: optional(string()),
       oasys: optional(string()),
-      "near-protocol": optional(string()),
-      "step-network": optional(string()),
-      "klay-token": optional(string()),
+      'near-protocol': optional(string()),
+      'step-network': optional(string()),
+      'klay-token': optional(string()),
       velas: optional(string()),
       dogechain: optional(string()),
       canto: optional(string()),
-      "arbitrum-nova": optional(string()),
+      'arbitrum-nova': optional(string()),
       bitgert: optional(string()),
       kava: optional(string()),
       astar: optional(string()),
       cosmos: optional(string()),
       conflux: optional(string()),
       energi: optional(string()),
-      "sx-network": optional(string()),
+      'sx-network': optional(string()),
       evmos: optional(string()),
       elastos: optional(string()),
-      "defi-kingdoms-blockchain": optional(string()),
-      "milkomeda-cardano": optional(string()),
+      'defi-kingdoms-blockchain': optional(string()),
+      'milkomeda-cardano': optional(string()),
       syscoin: optional(string()),
       telos: optional(string()),
       moonbeam: optional(string()),
       avalanche: optional(string()),
       meter: optional(string()),
-      "kucoin-community-chain": optional(string()),
+      'kucoin-community-chain': optional(string()),
       fuse: optional(string()),
-      "metis-andromeda": optional(string()),
-      "optimistic-ethereum": optional(string()),
+      'metis-andromeda': optional(string()),
+      'optimistic-ethereum': optional(string()),
       aurora: optional(string()),
       kardiachain: optional(string()),
       cronos: optional(string()),
       boba: optional(string()),
       ronin: optional(string()),
       sora: optional(string()),
-      "okex-chain": optional(string()),
-      "arbitrum-one": optional(string()),
-      "harmony-shard-0": optional(string()),
+      'okex-chain': optional(string()),
+      'arbitrum-one': optional(string()),
+      'harmony-shard-0': optional(string()),
       fantom: optional(string()),
       tomochain: optional(string()),
       solana: optional(string()),
-      "binance-smart-chain": optional(string()),
-      "polygon-pos": optional(string()),
+      'binance-smart-chain': optional(string()),
+      'polygon-pos': optional(string()),
       xdai: optional(string()),
     })
   ),
@@ -110,19 +105,25 @@ export const CoingeckoStablecoinSchema = type({
   last_updated: nullable(datetime),
 });
 
-export type CoingeckoStablecoinsSchema = Infer<typeof CoingeckoStablecoinsSchema>;
+export type CoingeckoStablecoinsSchema = Infer<
+  typeof CoingeckoStablecoinsSchema
+>;
 export const CoingeckoStablecoinsSchema = type({
   data: array(CoingeckoStablecoinSchema),
 });
 
 // This is the schema for the data returned by the Coingecko API _tokenListUrl
 
-export type CoingeckoTokenListSchemaExtension = Infer<typeof CoingeckoTokenListSchemaExtension>;
+export type CoingeckoTokenListSchemaExtension = Infer<
+  typeof CoingeckoTokenListSchemaExtension
+>;
 export const CoingeckoTokenListSchemaExtension = type({
   coingeckoId: optional(string()),
 });
 
-export type CoingeckoTokenListSchemaToken = Infer<typeof CoingeckoTokenListSchemaToken>;
+export type CoingeckoTokenListSchemaToken = Infer<
+  typeof CoingeckoTokenListSchemaToken
+>;
 export const CoingeckoTokenListSchemaToken = type({
   chainId: optional(nullable(number())),
   address: optional(string()),
