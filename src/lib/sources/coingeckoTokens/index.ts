@@ -1,0 +1,175 @@
+/* import fetch from "node-fetch"; */
+import * as fs from "fs";
+import { _coinsUrl, _mainnetChainId, _path, _stablecoinsUrl, _tokenListUrl } from "./constants";
+import { CoinMap, Json } from "./types";
+import {
+  CoingeckoCoinsSchema,
+  CoingeckoStablecoinsSchema,
+  CoingeckoTokenListSchema,
+  CoingeckoTokenListSchemaToken,
+} from "./schema";
+import { create } from "superstruct";
+import axios, { AxiosResponse } from "axios";
+import { fetchOldTokens } from "../tokenRegistry/tokenList";
+
+async function fetchTokensAndWriteToFile() {
+  // get the coingecko token Public keys and their coingecko ids.
+  const coins = await fetchCoins();
+  // get the coingecko tokens from the tokenlist and match them with the coingecko ids.
+  const coingecko = await matchTokens(coins);
+  // write the coingecko tokens to the tokenlist file.
+  await writeToFile(coingecko);
+}
+
+function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined;
+}
+
+async function fetchCoins(): Promise<CoinMap> {
+  const config = {
+    headers: {
+      "Accept-Encoding": "*",
+    },
+  };
+
+  const responses = await Promise.all([_coinsUrl, _stablecoinsUrl].map((url) => axios.get(url, config)));
+
+  const coins = create(responses[0], CoingeckoCoinsSchema).data;
+
+  /* console.log("coins: ", coins); */
+
+  const stablecoins = create(responses[1], CoingeckoStablecoinsSchema).data;
+
+  /* console.log("stablecoins: ", stablecoins); */
+
+  const ct = coins
+    .map((coin) => {
+      const solAddress = coin.platforms?.solana;
+      if (typeof solAddress !== "string") return null;
+
+      const coingeckoId = coin?.id;
+      if (typeof coingeckoId !== "string") return null;
+
+      const isStablecoin = stablecoins.some((st) => st.id === coingeckoId);
+
+      return { [solAddress]: { coingeckoId, isStablecoin } };
+    })
+    .filter(notEmpty)
+    .reduce((prev, curr) => ({ ...prev, ...curr }), {});
+
+  /* console.log("ct: ", JSON.stringify(ct, null, 4)); */
+
+  return ct;
+}
+
+function matchCoingeckoAndOldTokens(cgData: CoingeckoTokenListSchema) {
+  const coingecko = create(cgData, CoingeckoTokenListSchema);
+
+  // set the chainId to 101 for the coingecko tokens
+  for (const token of coingecko.tokens) {
+    token.chainId = 101;
+  }
+
+  const oldTokens = fetchOldTokens();
+
+  // gets the tokens from both lists, but if the token is in both lists, it will take the one from the old list.
+  // I do this to get the devnet and testnet tokens, that are not present in the coingecko URL
+
+  const allTokens = [...coingecko.tokens];
+
+  for (const oldToken of oldTokens.tokens) {
+    const found = allTokens.find(
+      (token) => token.address === oldToken.address && token.chainId === oldToken.chainId
+    );
+
+    if (!found) {
+      /* console.log("oldToken: ", oldToken); */
+      allTokens.push(oldToken);
+    }
+  }
+
+  /* console.log("allTOkens: ", JSON.stringify(allTokens, null, 4)); */
+
+  coingecko.tokens = allTokens;
+
+  return coingecko;
+}
+
+async function matchTokens(coins: CoinMap) /* : Promise<Json> */ {
+  const config = {
+    headers: {
+      "Accept-Encoding": "*",
+    },
+  };
+  const rawCoingecko = await axios.get(_tokenListUrl, config);
+
+  /* console.log("responses: ", rawCoingecko.data); */
+
+  const coingecko = /* create(rawCoingecko.data, CoingeckoTokenListSchema); */ matchCoingeckoAndOldTokens(
+    rawCoingecko.data
+  );
+
+  coingecko.tokens = coingecko.tokens
+    .filter((token) => typeof token === "object")
+    .map((token) => updateToken(token, coins));
+
+  return coingecko;
+}
+
+function updateToken(token: CoingeckoTokenListSchemaToken, coins: CoinMap): CoingeckoTokenListSchemaToken {
+  const address = token.address;
+  const coinData = coins[address];
+
+  const coingeckoId = coinData?.coingeckoId;
+  const isStablecoin = coinData?.isStablecoin || false;
+
+  if (coingeckoId != null) token.extensions = { coingeckoId };
+  if (isStablecoin) token.tags = ["stablecoin"];
+
+  /* if (token.chainId == 103) console.log("token: ", token); */
+
+  if (!token.chainId) token.chainId = _mainnetChainId;
+
+  token.logoURI = typeof token.logoURI === "string" ? updateLogoUri(token.logoURI) : "";
+
+  return token;
+}
+
+function updateLogoUri(uri: string): string {
+  if (uri == "") return "";
+
+  try {
+    const url = new URL(uri);
+    url.pathname = url.pathname.replace("thumb", "large");
+
+    return url.toString();
+  } catch (error) {
+    console.log("Invalid URI:", uri);
+    throw error;
+  }
+}
+
+async function writeToFile(coingecko: Json): Promise<void> {
+  const file = _path;
+
+  let nonMainnetTokens: Json[] | undefined;
+  try {
+    const contents = fs.readFileSync(file, "utf8");
+    const data = JSON.parse(contents);
+    nonMainnetTokens = data.tokens.filter((token: { chainId: number }) => token.chainId !== _mainnetChainId);
+  } catch (error) {
+    // do nothing
+  }
+
+  const allTokens = {
+    ...coingecko,
+    tokens: [...(coingecko.tokens || []), ...(nonMainnetTokens || [])],
+  };
+
+  /*   console.log("allTokens: ", JSON.stringify(allTokens, null, 4));
+  console.log("non-mainnet: ", JSON.stringify(nonMainnetTokens, null, 4)); */
+
+  await fs.promises.writeFile(file, JSON.stringify(allTokens));
+}
+
+export default fetchTokensAndWriteToFile;
