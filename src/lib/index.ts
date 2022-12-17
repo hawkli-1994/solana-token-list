@@ -61,7 +61,7 @@ export const CLUSTER_SLUGS: { [id: string]: ENV } = {
 
 export class GitHubTokenListResolutionStrategy {
   repositories = [
-    "https://raw.githubusercontent.com/JuanRdBO/solana-token-list/main/src/lib/core/tokenlist.json",
+    "https://raw.githubusercontent.com/JuanRdBO/solana-token-list/main/src/tokens/solana.tokenlist.json",
   ];
 
   resolve = () => {
@@ -71,7 +71,7 @@ export class GitHubTokenListResolutionStrategy {
 
 export class CDNTokenListResolutionStrategy {
   repositories = [
-    "https://cdn.jsdelivr.net/gh/JuanRdBO/solana-token-list@latest/src/lib/core/tokenlist.json",
+    "https://cdn.jsdelivr.net/gh/JuanRdBO/solana-token-list@latest/src/tokens/solana.tokenlist.json",
   ];
 
   resolve = () => {
