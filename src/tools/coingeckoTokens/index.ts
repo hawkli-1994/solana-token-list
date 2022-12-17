@@ -131,7 +131,8 @@ function updateToken(
   coins: CoinMap
 ): CoingeckoTokenListSchemaToken {
   const address = token.address;
-  const coinData = coins[address];
+
+  const coinData = address ? coins[address] : undefined;
 
   const coingeckoId = coinData?.coingeckoId;
   const isStablecoin = coinData?.isStablecoin || false;
