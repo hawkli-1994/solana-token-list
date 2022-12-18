@@ -1,7 +1,10 @@
 {
   "name": "solana-token-list",
-  "version": "0.0.17",
-  "repository": "https://github.com/JuanRdBO/solana-token-list",
+  "version": "0.0.18",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuanRdBO/solana-token-list.git"
+  },
   "description": "Homebrew Solana Token Registry with Coingecko data",
   "main": "dist/main/index.js",
   "typings": "dist/main/index.d.ts",
