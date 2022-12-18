@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/solana-token-list)](https://unpkg.com/solana-token-list@latest/) [![GitHub license](https://img.shields.io/badge/license-APACHE-blue.svg)](https://github.com/JuanRdBO/solana-token-list/main/LICENSE.md)
 
-Solana Token list is a package fork of [Solana Token Registry](https://github.com/solana-labs/token-list) that allows application to query for list of tokens and has information of the Solana community as well as Coingecko.
+Solana Token list is a fork of [Solana Token Registry](https://github.com/solana-labs/token-list), which extends the outdated information of the token list and extends it with information sourced from Coingecko.
 The JSON schema for the tokens includes: chainId, address, name, decimals, symbol, logoURI (optional), tags (optional), and custom extensions metadata.
 
 ### Installation
