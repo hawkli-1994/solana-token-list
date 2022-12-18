@@ -1,5 +1,4 @@
-import { fetch } from 'cross-fetch';
-
+import axios from 'axios';
 import tokenlist from '../tokens/solana.tokenlist.json';
 
 export enum ENV {
@@ -91,9 +90,14 @@ const queryJsonFiles = async (files: string[]) => {
   const responses: TokenList[] = (await Promise.all(
     files.map(async (repo) => {
       try {
-        const response = await fetch(repo);
-        const json = (await response.json()) as TokenList;
-        return json;
+        const config = {
+          headers: {
+            'Accept-Encoding': '*',
+          },
+        };
+        const response = (await axios.get(repo, config))?.data as TokenList;
+
+        return response;
       } catch {
         console.info(
           `@solana/token-registry: falling back to static repository.`
