@@ -1,5 +1,6 @@
-/* import fetch from "node-fetch"; */
+import { PublicKey } from '@solana/web3.js';
 import * as fs from 'fs';
+
 import {
   _coinsUrl,
   _mainnetChainId,
@@ -11,20 +12,25 @@ import { CoinMap, Json } from './types';
 import {
   CoingeckoCoinsSchema,
   CoingeckoStablecoinsSchema,
+  CoingeckoStablecoinSchema,
   CoingeckoTokenListSchema,
   CoingeckoTokenListSchemaToken,
+  CoingeckoCoinSchema,
 } from './schema';
 import { create } from 'superstruct';
 import axios from 'axios';
 import { fetchOldTokens } from '../tokenRegistry/tokenList';
+import config from '../config';
 
 async function fetchTokensAndWriteToFile() {
   // get the coingecko token Public keys and their coingecko ids.
   const coins = await fetchCoins();
   // get the coingecko tokens from the tokenlist and match them with the coingecko ids.
   const coingecko = await matchTokens(coins);
+  // filter out unwanted tokens
+  const filteredTokens = filterUndesiredTokens(coingecko);
   // write the coingecko tokens to the tokenlist file.
-  await writeToFile(coingecko);
+  await writeToFile(filteredTokens);
 }
 
 function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
@@ -68,6 +74,46 @@ async function fetchCoins(): Promise<CoinMap> {
   /* console.log("ct: ", JSON.stringify(ct, null, 4)); */
 
   return ct;
+}
+
+function addSolanaToken(coins: any) {
+  const solanaToken = {
+    chainId: 101,
+    address: PublicKey.default.toString(),
+    name: 'Solana',
+    symbol: 'SOL',
+    decimals: 9,
+    logoURI:
+      'https://assets.coingecko.com/coins/images/21629/thumb/solana.jpg?1639626543',
+    extensions: { coingeckoId: 'solana' },
+  };
+
+  coins.push(solanaToken);
+
+  return coins;
+}
+
+function filterUndesiredTokens(tokens: any) {
+  function isUndesired(coin: CoingeckoCoinSchema | CoingeckoStablecoinSchema) {
+    if (!coin?.name || !coin?.symbol) return true;
+
+    const undesiredWords = config.undesiredWords;
+
+    const isInName = undesiredWords.some(function (word) {
+      return coin.name.toLowerCase().trim().indexOf(word) !== -1;
+    });
+
+    const isInSymbol = undesiredWords.some(function (word) {
+      return coin.symbol.toLowerCase().trim().indexOf(word) !== -1;
+    });
+
+    return isInName || isInSymbol;
+  }
+
+  return {
+    ...tokens,
+    tokens: tokens.tokens.filter((token: any) => !isUndesired(token)),
+  };
 }
 
 function matchCoingeckoAndOldTokens(cgData: CoingeckoTokenListSchema) {
@@ -122,6 +168,10 @@ async function matchTokens(coins: CoinMap) /* : Promise<Json> */ {
   coingecko.tokens = coingecko.tokens
     .filter((token) => typeof token === 'object')
     .map((token) => updateToken(token, coins));
+
+  const newCgTokens = addSolanaToken(coingecko.tokens);
+
+  coingecko.tokens = newCgTokens;
 
   return coingecko;
 }

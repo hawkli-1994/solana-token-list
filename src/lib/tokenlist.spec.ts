@@ -45,7 +45,7 @@ test('Token list throws error when calling filterByClusterSlug with slug that do
     { instanceOf: Error }
   );
   t.is(
-    error.message,
+    error?.message,
     `Unknown slug: whoop, please use one of ${Object.keys(CLUSTER_SLUGS)}`
   );
 });
