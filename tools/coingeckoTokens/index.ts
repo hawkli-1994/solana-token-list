@@ -4,7 +4,8 @@ import * as fs from 'fs';
 import {
   _coinsUrl,
   _mainnetChainId,
-  _path,
+  _solanaTokensPath,
+  _stellarTokensPath,
   _stablecoinsUrl,
   _tokenListUrl,
 } from './constants';
@@ -22,7 +23,7 @@ import axios from 'axios';
 import { fetchOldTokens } from '../tokenRegistry/tokenList';
 import config from '../config';
 
-async function fetchTokensAndWriteToFile() {
+async function fetchSolanaTokensAndWriteToFile() {
   // get the coingecko token Public keys and their coingecko ids.
   const coins = await fetchCoins();
   // get the coingecko tokens from the tokenlist and match them with the coingecko ids.
@@ -214,9 +215,10 @@ function updateLogoUri(uri: string): string {
   }
 }
 
-async function writeToFile(coingecko: Json): Promise<void> {
-  const file = _path;
-
+async function writeToFile(
+  coingecko: Json,
+  file = _solanaTokensPath
+): Promise<void> {
   let nonMainnetTokens: Json[] | undefined;
   try {
     const contents = fs.readFileSync(file, 'utf8');
@@ -239,4 +241,4 @@ async function writeToFile(coingecko: Json): Promise<void> {
   await fs.promises.writeFile(file, JSON.stringify(allTokens));
 }
 
-export default fetchTokensAndWriteToFile;
+export default fetchSolanaTokensAndWriteToFile;

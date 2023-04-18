@@ -1,7 +1,11 @@
-import { TokenListProvider } from ".";
+import { TokenListProvider } from '.';
 
 (async function () {
-  const tkList = await new TokenListProvider().resolve();
+  const solanaTkList = await new TokenListProvider().resolveSolana();
 
-  console.log("tkList: ", tkList);
+  console.log('SOLANA tkList: ', solanaTkList);
+
+  const stellarTkList = await new TokenListProvider().resolveStellar();
+
+  console.log('STELLAR tkList: ', stellarTkList);
 })();

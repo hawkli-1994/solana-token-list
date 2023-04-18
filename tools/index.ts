@@ -1,5 +1,7 @@
-import fetchTokensAndWriteToFile from "./coingeckoTokens";
+import fetchSolanaTokensAndWriteToFile from './coingeckoTokens';
+import fetchStellarTokensAndWriteToFile from './stellarTokens';
 
 (async function () {
-  await fetchTokensAndWriteToFile();
+  await fetchSolanaTokensAndWriteToFile();
+  await fetchStellarTokensAndWriteToFile();
 })();
