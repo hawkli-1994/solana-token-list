@@ -11,6 +11,9 @@ import {
 } from './stellar';
 import { StellarStrategy } from './stellar/types';
 
+export * from './solana';
+export * from './stellar';
+
 export class TokenListProvider {
   static strategies = {
     solana: {
