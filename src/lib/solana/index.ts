@@ -2,6 +2,8 @@ import axios from 'axios';
 import { SolanaTokenInfo, SolanaENV, SolanaTokenList } from './types';
 import solanaTokenlist from '../../tokens/solana.tokenlist.json';
 
+export * from './types';
+
 export type SolanaTokenInfoMap = Map<string, SolanaTokenInfo>;
 
 export const CLUSTER_SLUGS: { [id: string]: SolanaENV } = {

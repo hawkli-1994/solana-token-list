@@ -19,6 +19,7 @@ export const CoingeckoCoinSchema = type({
   platforms: optional(
     type({
       ethereum: optional(string()),
+      stellar: optional(string()),
       oasys: optional(string()),
       'near-protocol': optional(string()),
       'step-network': optional(string()),

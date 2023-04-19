@@ -6,13 +6,17 @@
       "symbol": "USDC",
       "address": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
       "logoURI": "https://www.centre.io/images/usdc/usdc-icon-86074d9d49.png",
-      "domain": "centre.io"
+      "domain": "centre.io",
+      "name": "USD Coin",
+      "coingeckoId": "usd-coin"
     },
     {
       "symbol": "yUSDC",
       "address": "GDGTVWSM4MGS4T7Z6W4RPWOCHE2I6RDFCIFZGS3DOA63LWQTRNZNTTFF",
       "logoURI": "https://ultrastellar.com/static/images/icons/yUSDC.png",
-      "domain": "ultrastellar.com"
+      "domain": "ultrastellar.com",
+      "name": "Ultra Stellar USD",
+      "coingeckoId": "usd-coin"
     },
     {
       "symbol": "AUDD",
@@ -24,18 +28,24 @@
       "symbol": "USDS",
       "address": "GBK4AYTOYIAYT4UJECSQGMACUWLKYOOM4VCAUUZ3Y3FG5XD2LYK3FGK2",
       "logoURI": "https://prime.stably.io/images/USDS-logo.svg",
-      "domain": "stably.io"
+      "domain": "stably.io",
+      "name": "Stably USD",
+      "coingeckoId": "usd-coin"
     },
     {
       "symbol": "EURT",
       "address": "GAP5LETOV6YIE62YAM56STDANPRDO7ZFDBGSNHJQIYGGKSMOZAHOOS2S",
-      "domain": "eurt.exchange"
+      "domain": "eurt.exchange",
+      "name": "EURT Euro",
+      "coingeckoId": "euro-coin"
     },
     {
       "symbol": "BTC",
       "address": "GBVOL67TMUQBGL4TZYNMY3ZQ5WGQYFPFD5VJRWXR72VA33VFNL225PL5",
       "logoURI": "https://stellarport.io/assets/issues/btc.png",
-      "domain": "stellarport.io"
+      "domain": "stellarport.io",
+      "name": "Bitcoin",
+      "coingeckoId": "bitcoin"
     },
     {
       "symbol": "BRAVE",
@@ -47,7 +57,9 @@
       "symbol": "yXLM",
       "address": "GARDNV3Q7YGT4AKSDF25LT32YSCCW4EV22Y2TV3I2PU2MMXJTEDL5T55",
       "logoURI": "https://ultrastellar.com/static/images/icons/yXLM.png",
-      "domain": "ultrastellar.com"
+      "domain": "ultrastellar.com",
+      "name": "Ultra Stellar Lumens",
+      "coingeckoId": "stellar"
     },
     {
       "symbol": "CLPX",
@@ -59,7 +71,9 @@
       "symbol": "LSP",
       "address": "GAB7STHVD5BDH3EEYXPI3OM7PCS4V443PYB5FNT6CFGJVPDLMKDM24WK",
       "logoURI": "https://lumenswap.io/t/Lumenswap144.png",
-      "domain": "lumenswap.io"
+      "domain": "lumenswap.io",
+      "name": "Lumenswap",
+      "coingeckoId": "lumenswap"
     },
     {
       "symbol": "SLT",
@@ -71,7 +85,9 @@
       "symbol": "BTCLN",
       "address": "GDPKQ2TSNJOFSEE7XSUXPWRP27H6GFGLWD7JCHNEYYWQVGFA543EVBVT",
       "logoURI": "https://kbtrading.org/static/Bitcoin_lightning_logo.png",
-      "domain": "kbtrading.org"
+      "domain": "kbtrading.org",
+      "name": "kbtrading BTC LN",
+      "coingeckoId": "bitcoin"
     },
     {
       "symbol": "ARS",
@@ -83,13 +99,17 @@
       "symbol": "AFR",
       "address": "GBX6YI45VU7WNAAKA3RBFDR3I3UKNFHTJPQ5F6KOOKSGYIAM4TRQN54W",
       "logoURI": "https://afreum.com/stellar/ST_Afreum.png",
-      "domain": "afreum.com"
+      "domain": "afreum.com",
+      "name": "Afreum",
+      "coingeckoId": "afreum"
     },
     {
       "symbol": "XRP",
       "address": "GCNSGHUCG5VMGLT5RIYYZSO7VQULQKAJ62QA33DBC5PPBSO57LFWVV6P",
       "logoURI": "https://interstellar.exchange/app/assets/images/coins/XRP.png",
-      "domain": "interstellar.exchange"
+      "domain": "interstellar.exchange",
+      "name": "Ripple",
+      "coingeckoId": "xrp"
     },
     {
       "symbol": "PLAT",
@@ -101,7 +121,9 @@
       "symbol": "ETH",
       "address": "GBFXOHVAS43OIWNIO7XLRJAHT3BICFEIKOJLZVXNT572MISM4CMGSOCC",
       "logoURI": "https://ultrastellar.com/static/images/icons/ETH.png",
-      "domain": "ultrastellar.com"
+      "domain": "ultrastellar.com",
+      "name": "Ultra Stellar Ethereum",
+      "coingeckoId": "ethereum"
     },
     {
       "symbol": "BRLT",
@@ -113,7 +135,9 @@
       "symbol": "MXN",
       "address": "GCKIK5F6J4KMKF6MKB5EM67S5CK557EZQ3IAMZM5FFAYST63S3HWXVPE",
       "logoURI": "https://www.anchormxn.com/public/images/ico.png",
-      "domain": "www.anchormxn.com"
+      "domain": "www.anchormxn.com",
+      "name": "anchormxn MXN",
+      "coingeckoId": "mexican-peso-tether"
     },
     {
       "symbol": "PYBC",
@@ -137,7 +161,9 @@
       "symbol": "ETH",
       "address": "GCNSGHUCG5VMGLT5RIYYZSO7VQULQKAJ62QA33DBC5PPBSO57LFWVV6P",
       "logoURI": "https://interstellar.exchange/app/assets/images/coins/ETH.png",
-      "domain": "interstellar.exchange"
+      "domain": "interstellar.exchange",
+      "name": "Interstellar ETH",
+      "coingeckoId": "ethereum"
     },
     {
       "symbol": "NUNA",
@@ -167,7 +193,9 @@
       "symbol": "yETH",
       "address": "GDYQNEF2UWTK4L6HITMT53MZ6F5QWO3Q4UVE6SCGC4OMEQIZQQDERQFD",
       "logoURI": "https://ultrastellar.com/static/images/icons/yETH.png",
-      "domain": "ultrastellar.com"
+      "domain": "ultrastellar.com",
+      "name": "Ultra Stellar Ethereum",
+      "coingeckoId": "ethereum"
     },
     {
       "symbol": "SLVR",
@@ -179,7 +207,9 @@
       "symbol": "BTC",
       "address": "GDPJALI4AZKUU2W426U5WKMAT6CN3AJRPIIRYR2YM54TL2GDWO5O2MZM",
       "logoURI": "https://ultrastellar.com/static/images/icons/BTC.png",
-      "domain": "ultrastellar.com"
+      "domain": "ultrastellar.com",
+      "name": "Ultra Stellar Bitcoin",
+      "coingeckoId": "bitcoin"
     },
     {
       "symbol": "KES",
@@ -209,25 +239,32 @@
       "symbol": "XRP",
       "address": "GBVOL67TMUQBGL4TZYNMY3ZQ5WGQYFPFD5VJRWXR72VA33VFNL225PL5",
       "logoURI": "https://stellarport.io/assets/issues/xrp.png",
-      "domain": "stellarport.io"
+      "domain": "stellarport.io",
+      "name": "StellarPort XRP",
+      "coingeckoId": "xrp"
     },
     {
       "symbol": "yBTC",
       "address": "GBUVRNH4RW4VLHP4C5MOF46RRIRZLAVHYGX45MVSTKA2F6TMR7E7L6NW",
       "logoURI": "https://ultrastellar.com/static/images/icons/yBTC.png",
-      "domain": "ultrastellar.com"
+      "domain": "ultrastellar.com",
+      "name": "Ultra Stellar Bitcoin",
+      "coingeckoId": "bitcoin"
     },
     {
       "symbol": "BTC",
       "address": "GCNSGHUCG5VMGLT5RIYYZSO7VQULQKAJ62QA33DBC5PPBSO57LFWVV6P",
       "logoURI": "https://interstellar.exchange/app/assets/images/coins/BTC.png",
-      "domain": "interstellar.exchange"
+      "domain": "interstellar.exchange",
+      "name": "InterStellar BTC",
+      "coingeckoId": "bitcoin"
     },
     {
       "symbol": "BTC",
       "address": "GCQVEST7KIWV3KOSNDDUJKEPZLBFWKM7DUS4TCLW2VNVPCBGTDRVTEIT",
       "logoURI": "https://ipfs.io/ipfs/bafkreicymbkuxwhil6i7xo7344iy74aqbtupxpw4r2nicb6qlczgfcbyvu",
-      "domain": "coinqvest.com"
+      "domain": "coinqvest.com",
+      "coingeckoId": "bitcoin"
     },
     {
       "symbol": "LTC",
@@ -239,13 +276,17 @@
       "symbol": "ETH",
       "address": "GBVOL67TMUQBGL4TZYNMY3ZQ5WGQYFPFD5VJRWXR72VA33VFNL225PL5",
       "logoURI": "https://stellarport.io/assets/issues/eth.png",
-      "domain": "stellarport.io"
+      "domain": "stellarport.io",
+      "name": "Coinqvest ETH",
+      "coingeckoId": "ethereum"
     },
     {
       "symbol": "AQUA",
       "address": "GBNZILSTVQZ4R7IKQDGHYGY2QXL5QOFJYQMXPKWRRM5PAV7Y4M67AQUA",
       "logoURI": "https://aqua.network/assets/img/aqua-logo.png",
-      "domain": "aqua.network"
+      "domain": "aqua.network",
+      "name": "Aquarius",
+      "coingeckoId": "aquarius"
     },
     {
       "symbol": "PALL",
@@ -306,6 +347,14 @@
       "address": "GDEGOXPCHXWFYY234D2YZSPEJ24BX42ESJNVHY5H7TWWQSYRN5ZKZE3N",
       "logoURI": "https://suregifts.com/.well-known/rmt.png",
       "domain": "sureremit.co"
+    },
+    {
+      "symbol": "XLM",
+      "name": "Stellar Lumens",
+      "address": "",
+      "domain": "stellar.org",
+      "coingeckoId": "stellar",
+      "logoURI": "https://assets.coingecko.com/coins/images/100/large/Stellar_symbol_black_RGB.png"
     }
   ]
 }

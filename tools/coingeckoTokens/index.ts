@@ -25,7 +25,7 @@ import config from '../config';
 
 async function fetchSolanaTokensAndWriteToFile() {
   // get the coingecko token Public keys and their coingecko ids.
-  const coins = await fetchCoins();
+  const coins = await fetchCoingeckoCoins();
   // get the coingecko tokens from the tokenlist and match them with the coingecko ids.
   const coingecko = await matchTokens(coins);
   // filter out unwanted tokens
@@ -34,11 +34,13 @@ async function fetchSolanaTokensAndWriteToFile() {
   await writeToFile(filteredTokens);
 }
 
-function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+export function notEmpty<TValue>(
+  value: TValue | null | undefined
+): value is TValue {
   return value !== null && value !== undefined;
 }
 
-async function fetchCoins(): Promise<CoinMap> {
+async function fetchCoingeckoCoins(): Promise<CoinMap> {
   const config = {
     headers: {
       'Accept-Encoding': '*',
