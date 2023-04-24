@@ -5,7 +5,7 @@ export interface StellarTokenInfo {
   domain: string;
   logoURI?: string;
   coingeckoId?: string;
-  coincodex?: string;
+  coincodexId?: string;
 }
 
 export enum StellarStrategy {
