@@ -45,6 +45,7 @@ async function manualCoingeckoMatch(stellarTokens: any) {
     address: '',
     domain: 'stellar.org',
     coingeckoId: 'stellar',
+    coincodex: 'stellar',
     logoURI:
       'https://assets.coingecko.com/coins/images/100/large/Stellar_symbol_black_RGB.png',
   });
