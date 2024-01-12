@@ -42,7 +42,7 @@ async function manualCoingeckoMatch(stellarTokens: any) {
   coingecko.push({
     symbol: 'XLM',
     name: 'Stellar Lumens',
-    address: '',
+    address: '11111111111111111111111111111111',
     domain: 'stellar.org',
     coingeckoId: 'stellar',
     coincodexId: 'xlm',
