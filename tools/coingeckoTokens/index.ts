@@ -22,6 +22,7 @@ import { create } from 'superstruct';
 import axios from 'axios';
 import { fetchOldTokens } from '../tokenRegistry/tokenList';
 import config from '../config';
+import { fetchSolanaJupiterTokensParsed } from './fetchJupiterTokens';
 
 async function fetchSolanaTokensAndWriteToFile() {
   // get the coingecko token Public keys and their coingecko ids.
@@ -30,8 +31,41 @@ async function fetchSolanaTokensAndWriteToFile() {
   const coingecko = await matchTokens(coins);
   // filter out unwanted tokens
   const filteredTokens = filterUndesiredTokens(coingecko);
+
+  // fetch Jupiter tokens
+  const jupCoins = await fetchSolanaJupiterTokensParsed();
+  // match the Jupiter tokens with the old tokens. We prefer Jupiter tokens over old tokens.
+  const jupTokens = matchJupiterAndRest({
+    jupTokens: jupCoins,
+    restTokens: filteredTokens,
+  });
+
   // write the coingecko tokens to the tokenlist file.
-  await writeToFile(filteredTokens);
+  await writeToFile(jupTokens);
+}
+
+function matchJupiterAndRest({
+  jupTokens,
+  restTokens,
+}: {
+  jupTokens: CoingeckoTokenListSchemaToken[];
+  restTokens: CoingeckoTokenListSchema;
+}): CoingeckoTokenListSchema {
+  // console.log('jupTokens: ', jupTokens.slice(0, 10));
+  // console.log('restTokens: ', {
+  //   ...restTokens,
+  //   tokens: restTokens.tokens.slice(0, 10),
+  // });
+
+  const merged = new Map<string, CoingeckoTokenListSchemaToken>();
+
+  // First add all items from the primary list to the map
+  jupTokens.forEach((item) => merged.set(item?.address ?? '', item));
+
+  // Then add all items from the secondary list, overwriting duplicates from the primary list
+  restTokens.tokens.forEach((item) => merged.set(item?.address ?? '', item));
+
+  return { ...restTokens, tokens: Array.from(merged.values()) };
 }
 
 export function notEmpty<TValue>(
